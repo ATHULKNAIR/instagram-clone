@@ -1,29 +1,35 @@
 const mongoose = require('mongoose');
+const {ObjectId} = mongoose.Schema.Types;
 
 const postSchema = new mongoose.Schema({
-    title :{
+    caption :{
         type : String,
-        required:  true
+        required:  [true,"Please enter a caption"]
     },
-    body:{
-        type: String
+    tags:{
+        type: [String]
     },
-    image : {
-        type: String,
-        required : true
+    files : {
+        type: [String],
+        validate : (v)=> v===null || v.length >0
     },
     likes:[{
         type: ObjectId,
         ref : "User"
     }],
+    likesCount : [{
+        type: Number,
+        default :0
+    }],
     comments: [{
         text : String,
-        postedBy : {
-            type :ObjectId,
-            ref : "User"
-        }
+        
     }],
-    postedBy : {
+    commentsCount : {
+        type: Number,
+        default :0
+    },
+   user : {
         type : ObjectId,
         ref : "User"
     }
