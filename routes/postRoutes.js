@@ -1,15 +1,16 @@
 const router = require('express').Router();
 const postCtrl = require('../controllers/postCtrl');
+const auth = require('../middlewares/requireLogin');
 
-
-router.route('/').get(postCtrl.getPosts)
-                 .post(postCtrl.addPost);
-router.route('/search').get(postCtrl.searchPost);
-router.route('/:id').get(postCtrl.getPost)
-                    .delete(postCtrl.deletePost);
-router.route('/:id/togglelike').get(postCtrl.toggleLike);
-router.route('/:id/togglesave').get(postCtrl.togggleSave);
-router.route('/:id/comments').post(postCtrl.addComment);
-router.route('/:id/comments/:commentId').delete(postCtrl.deleteComment);
+router.post('/',auth,postCtrl.addPost);
+router.get('/',postCtrl.getPosts)
+                 
+router.get('/search',postCtrl.searchPost);
+router.get('/:id',auth,postCtrl.getPost)
+router.delete('/:id',auth,postCtrl.deletePost);
+router.get('/:id/togglelike',auth,postCtrl.toggleLike);
+router.get('/:id/togglesave',auth,postCtrl.togggleSave);
+router.post('/:id/comments',auth,postCtrl.addComment);
+router.delete('/:id/comments/:commentId',auth,postCtrl.deleteComment);
 
 module.exports = router;

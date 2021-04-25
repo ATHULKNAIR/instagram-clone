@@ -1,5 +1,4 @@
  
-// const requireLogin = require('../middlewares/requireLogin');
 const Post = require('../models/postModel');
 const User = require('../models/userModel');
 
