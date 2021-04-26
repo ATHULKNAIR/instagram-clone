@@ -23,6 +23,8 @@ const postSchema = new mongoose.Schema({
     }],
     comments: [{
         text : String,
+        type: ObjectId,
+        ref:"Comment"
         
     }],
     commentsCount : {

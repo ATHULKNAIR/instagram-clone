@@ -8,8 +8,9 @@ const postCtrl = {
     getPosts : async (req,res)=>{
         try {
             const posts = await Post.find();
+         
             res.status(200).json({success : true, data:posts});
-            
+           
         } catch (err) {
             return res.status(500).json({msg:err.msg})
         }   
@@ -27,13 +28,8 @@ const postCtrl = {
                return res.status(404).json({message:"No post found for this id"})
            }
 
-           post.isMine = req.user.id === post.user._id.toString();
-
            const likes = post.likes.map((like)=>like.toString());
            post.isLiked = likes.includes(req.user.id);
-
-           const savedPosts = req.user.savedPosts.map((post)=>post.toString());
-           post.isSaved = savedPosts.includes(req.params.id);
 
            post.comments.forEach((comment)=>{
                comment.isCommentMine = false;
@@ -44,7 +40,7 @@ const postCtrl = {
            });
            res.status(200).json({success : true , data: post});
         } catch (err) {
-            return res.status(500).json({msg:err.msg})
+            return res.status(500).json({msg:err.message})
         }
     },
 
@@ -55,7 +51,7 @@ const postCtrl = {
             return res.status(404).json({message:"No post found for this id"});
         }      
 
-        if(post.user.toString() !== req.user,id){
+        if(post.user.toString() !== req.user.id){
             return res.status(401),json({message:"Your cannot delete this post"})
         }
         await User.findByIdAndUpdate(req.user.id,{
@@ -187,33 +183,7 @@ const postCtrl = {
         } catch (err) {
             return res.status(500).json({message:err.message});
         }
-    },
-
-    togggleSave : async (req,res)=>{
-       try {
-        const post = await Post.findById(req.params.id);
-        if(!post){
-            return res.status(404).json({message:"No post found.."})
-        }
-        const {user} = req;
-        if(user.savedPosts.includes(req.params.id)){
-            console.log("removing saved post");
-            await User.findByIdAndUpdate(user.id,{
-                $pull :{savedPosts : req.params.id}
-            });
-        }else{
-            console.log("saving post");
-            await User.findByIdAndUpdate(user.id,{
-                $push:{ savedPosts : req.params.id }
-            });
-
-            res.status(200).json({success : true , dataa: {}});
-        }
-       } catch (err) {
-           return res.status(500).json({message:err.message})
-       }
     }
-   
 
 }
 

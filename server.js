@@ -24,8 +24,8 @@ mongoose.connect(process.env.MONGODB_URL,{
     console.log("Connected to MongoDB..!")
 })
 
-app.get('/',(req,res)=>{
-    res.json("Hello World")
+app.get('/:id',(req,res)=>{
+    res.json(req.params.id)
 })
 
 app.use('/api/user',require('./routes/userRoutes'));

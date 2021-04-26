@@ -9,7 +9,6 @@ router.get('/search',postCtrl.searchPost);
 router.get('/:id',auth,postCtrl.getPost)
 router.delete('/:id',auth,postCtrl.deletePost);
 router.get('/:id/togglelike',auth,postCtrl.toggleLike);
-router.get('/:id/togglesave',auth,postCtrl.togggleSave);
 router.post('/:id/comments',auth,postCtrl.addComment);
 router.delete('/:id/comments/:commentId',auth,postCtrl.deleteComment);
 

@@ -79,7 +79,7 @@ const userCtrl = {
             $push:{following : req.params.id},
             $inc : {followingCount : 1}
         });
-        res.status(200).json({success: true , data : {}});
+        res.status(200).json({success: true , message:"Followed"});
     },
 
     unfollow : async (req,res)=>{
@@ -90,15 +90,15 @@ const userCtrl = {
         if(req.params.id === req.user.id){
             return res.status(400).json({message:"You cannot un/follow yourself"});
         }
-        await User.findOneAndUpdate(req.params.id,{
-            $pull : {followers :req.params.id},
-            $inc :{followersCount : -1}
+        await User.findByIdAndUpdate(req.params.id,{
+            $pull : {followers :req.user.id},
+            $inc :{followersCount :-1}
         });
-        await User.findOneAndUpdate(req.params.id,{
+        await User.findByIdAndUpdate(req.user.id,{
             $pull : {following : req.params.id},
-            $inc : { followingCount : -1}
+            $inc : { followingCount :-1}
         });
-        res.status(200).json({success : true, data : {}});
+        res.status(200).json({success : true, message: "unfollowed"});
     },
 
     feed : async (req,res)=>{
