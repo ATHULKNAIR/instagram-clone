@@ -30,6 +30,7 @@ app.get('/:id',(req,res)=>{
 
 app.use('/api/user',require('./routes/userRoutes'));
 app.use('/api/post',require('./routes/postRoutes'));
+app.use('/api/stories',require('./routes/storiesRoutes'));
 app.use('/api/',require('./routes/authRoutes'));
 app.use('/api',require('./routes/upload'));
 

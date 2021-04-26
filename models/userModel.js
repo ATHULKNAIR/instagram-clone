@@ -54,6 +54,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default :0
     },
+    stories :[{
+        type: ObjectId,
+        ref:"Stories"
+    }],
     createdAt : {
         type: Date,
         default : Date.now

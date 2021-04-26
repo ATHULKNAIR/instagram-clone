@@ -29,6 +29,7 @@ const userCtrl = {
         .populate({path : "savedPosts",select : "files comentsCount likesCount"})
         .populate({path : "followers",select : "photo username fullname"})
         .populate({path : "following", select : "photo username fullname"})
+        .populate({path : "stories",select: "stories"})
         .lean()
         .exec();
 
@@ -126,11 +127,6 @@ const userCtrl = {
                 post.isLiked = true;
             }
             
-            post.isSaved = false;
-            const savedPosts = req.user.savedPosts.map((post)=>post.toString());
-            if(savedPosts.includes(post._id)){
-                post.isSaved = true;
-            }
 
             post.isMine = false;
             if(post.user._id.toString()===req.user.id){

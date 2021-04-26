@@ -119,7 +119,7 @@ const postCtrl = {
            let comment = await Comment.create({
                user : req.user.id,
                post : req.params.id,
-               text : req.body.text
+               reply : req.body.reply
            });
 
            post.comments.push(comment._id);
