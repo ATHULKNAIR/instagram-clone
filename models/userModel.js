@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const {ObjectId} = mongoose.Schema.Types;
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+
 
 const userSchema = new mongoose.Schema({
     username :{

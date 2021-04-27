@@ -26,7 +26,6 @@ const userCtrl = {
         const user = await User.findOne({username : req.params.username})
         .select("-password")
         .populate({path : "posts",select : "files commentsCount likesCount"})
-        .populate({path : "savedPosts",select : "files comentsCount likesCount"})
         .populate({path : "followers",select : "photo username fullname"})
         .populate({path : "following", select : "photo username fullname"})
         .populate({path : "stories",select: "stories"})
